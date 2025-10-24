@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+@plugin './hero.ts';
+@config "../../tailwind.config.js";
+
+@theme {
+  --font-inter: "Inter";
+  --font-inter-tight: "Inter Tight";
+  --font-header: var(--font-header);
+  --font-body: var(--font-body);
+}
+
+:root {
+  --font-header: "Inter";
+  --font-body: "Inter Tight";
+}
+
+html,
+body,
+main {
+  height: 100vh;
+  font-family: var(--font-body);
+}

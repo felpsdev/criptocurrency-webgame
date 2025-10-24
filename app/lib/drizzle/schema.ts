@@ -12,7 +12,7 @@ import {
 export type Currency = InferSelectModel<typeof currencies>;
 
 export const currencies = pgTable("currencies", {
-  id: integer("id").primaryKey(),
+  id: serial("id").primaryKey(),
   name: varchar("name").notNull(),
   score: integer("score").notNull(),
   styles: integer("styles").array(3).notNull(),

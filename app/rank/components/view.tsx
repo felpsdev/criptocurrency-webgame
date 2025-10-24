@@ -5,6 +5,8 @@ import { colors } from "@/app/components/coin-render/data";
 import { Currency } from "@/app/lib/drizzle/schema";
 import { createClient } from "@/app/lib/supabase";
 import NumberFlow from "@number-flow/react";
+import { formatDistance } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { ChartArea } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import tailcolors from "tailwindcss/colors";
@@ -32,6 +34,8 @@ function View(props: ViewProps) {
       ),
     [currencies]
   );
+
+  console.log(currencies);
 
   useEffect(() => {
     const channel = client
@@ -198,8 +202,10 @@ function View(props: ViewProps) {
 
               <div className="flex flex-col gap-1 ml-auto items-end">
                 <span className="text-default-400 text-sm">
-                  {new Date(currency.createdAt).getHours()}:
-                  {new Date(currency.createdAt).getMinutes()}
+                  {formatDistance(new Date(currency.createdAt), new Date(), {
+                    addSuffix: true,
+                    locale: ptBR,
+                  })}
                 </span>
                 <span className="font-black text-lg w-fit justify-center bg-green-500/20 flex gap-2 text-green-500 px-4 py-2 rounded-lg">
                   <NumberFlow value={currency.score} />

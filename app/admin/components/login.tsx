@@ -20,10 +20,7 @@ function Login() {
   const handleSubmit = useCallback(async () => {
     setLoading(true);
 
-    const form = new FormData();
-    form.append("admin_key", key);
-
-    const request = await loginAsAdmin(form);
+    const request = await loginAsAdmin(key);
     if (request) {
       addToast({
         color: "success",

@@ -33,6 +33,9 @@ function Podium(props: PodiumProps) {
           <span style={{ color: colors[currency.styles[0]][2] }}>
             {currency.name}
           </span>
+          <span className="text-xs text-default-500">
+            Criada por(a): {currency.createdBy}
+          </span>
         </div>
       )}
 

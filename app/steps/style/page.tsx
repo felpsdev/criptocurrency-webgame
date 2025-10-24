@@ -86,7 +86,7 @@ function Page() {
               maxLength={20}
               value={name}
               onValueChange={setName}
-              label="Nome"
+              label="Nome da Moeda"
             />
             <LineSelection
               label="Formato"

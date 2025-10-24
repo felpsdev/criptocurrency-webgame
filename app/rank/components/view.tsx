@@ -35,8 +35,6 @@ function View(props: ViewProps) {
     [currencies]
   );
 
-  console.log(currencies);
-
   useEffect(() => {
     const channel = client
       .channel("rank-listener")

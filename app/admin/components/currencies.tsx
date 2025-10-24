@@ -104,7 +104,10 @@ function Currencies(props: CurrenciesProps) {
                   symbol={currency.styles[2]}
                   size="sm"
                 />
-                <span style={{ color: colors[currency.styles[0]][2] }}>
+                <span
+                  className="text-center"
+                  style={{ color: colors[currency.styles[0]][2] }}
+                >
                   {currency.name}
                 </span>
               </div>

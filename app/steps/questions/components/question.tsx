@@ -1,9 +1,9 @@
 "use client";
 
-import { computateQuestionResult } from "@/app/actions";
+import { computateQuestionResult, revalidadeQuestions } from "@/app/actions";
 import { levels, quiz } from "@/app/lib/quiz";
 import { Button, Card, CardBody, Chip, cn, Progress } from "@heroui/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckIcon, XIcon } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
 interface QuestionProps {
@@ -14,18 +14,24 @@ interface QuestionProps {
 function Question(props: QuestionProps) {
   const { id, progress } = props;
   const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState<null | "danger" | "success">(null);
   const [answer, setAnswer] = useState(-1);
   const question = useMemo(() => quiz[id], [id]);
 
   const handleNext = useCallback(async () => {
-    if (!question || answer === -1) return;
+    if (!question || answer === -1 || feedback !== null) return;
     setLoading(true);
 
-    await computateQuestionResult(id, answer);
-
-    setAnswer(-1);
+    const result = await computateQuestionResult(id, answer);
+    setFeedback(result ? "success" : "danger");
     setLoading(false);
-  }, [answer, question]);
+
+    setTimeout(async () => {
+      await revalidadeQuestions();
+      setFeedback(null);
+      setAnswer(-1);
+    }, 1500);
+  }, [answer, question, feedback]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -64,12 +70,19 @@ function Question(props: QuestionProps) {
           <Button
             isLoading={loading}
             isDisabled={answer === -1}
-            color="primary"
+            color={feedback ? feedback : "primary"}
             onPress={handleNext}
             className="justify-between mt-3"
-            endContent={<ArrowRight size={16} />}
+            startContent={
+              feedback && (feedback === "success" ? <CheckIcon /> : <XIcon />)
+            }
+            endContent={feedback === null && <ArrowRight size={16} />}
           >
-            Próxima questão
+            {feedback
+              ? feedback === "success"
+                ? "Questão Correta."
+                : "Questão Errada."
+              : "Próxima questão"}
           </Button>
           <Progress size="sm" value={progress} />
         </CardBody>

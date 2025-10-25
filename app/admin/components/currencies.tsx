@@ -10,7 +10,7 @@ import { CurrencyWithSession, removeCurrency } from "../actions";
 
 interface CurrenciesProps {
   initialData: CurrencyWithSession[];
-  request: (offset: number, length: number) => Promise<CurrencyWithSession[]>;
+  request: (offset: number, length?: number) => Promise<CurrencyWithSession[]>;
 }
 
 function Currencies(props: CurrenciesProps) {
@@ -24,7 +24,7 @@ function Currencies(props: CurrenciesProps) {
     if (loading) return;
     setLoading(true);
 
-    const payload = await request(0, currencies.length);
+    const payload = await request(0);
     if (payload) {
       setCurrencies(payload);
       addToast({

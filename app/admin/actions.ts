@@ -6,12 +6,12 @@ import { currencies, sessions } from "../lib/drizzle/schema";
 import { genCode, genRandomInt } from "../lib/math";
 import { quiz } from "../lib/quiz";
 
-export async function requestSessions(offset: number = 0, limit: number = 6) {
+export async function requestSessions(offset: number = 0, limit?: number) {
   const data = await db
     .select()
     .from(sessions)
     .offset(offset)
-    .limit(limit)
+    .limit(limit || 999999999)
     .orderBy(desc(sessions.createdAt));
   return data;
 }
@@ -28,8 +28,8 @@ const currenciesRequest = db
 
 export type CurrencyWithSession = Awaited<typeof currenciesRequest>[number];
 
-export async function requestCurrencies(offset: number = 0, limit: number = 6) {
-  const data = currenciesRequest.offset(offset).limit(limit);
+export async function requestCurrencies(offset: number = 0, limit?: number) {
+  const data = currenciesRequest.offset(offset).limit(limit || 999999999);
   return data;
 }
 

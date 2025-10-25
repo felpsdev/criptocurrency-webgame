@@ -21,7 +21,7 @@ import { createSession, removeSession } from "../actions";
 
 interface SessionsProps {
   initialData: Session[];
-  request: (offset: number, length: number) => Promise<Session[]>;
+  request: (offset: number, length?: number) => Promise<Session[]>;
 }
 
 function Sessions(props: SessionsProps) {
@@ -40,7 +40,7 @@ function Sessions(props: SessionsProps) {
     if (loading) return;
     setLoading(true);
 
-    const payload = await request(0, sessions.length);
+    const payload = await request(0);
     if (payload) {
       setSessions(payload);
       addToast({

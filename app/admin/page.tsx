@@ -9,8 +9,8 @@ async function Page() {
   if (!isAdmin) return <Login />;
 
   const [initialSessions, initialCurrencies] = await Promise.all([
-    requestSessions(0),
-    requestCurrencies(0),
+    requestSessions(0, 6),
+    requestCurrencies(0, 6),
   ]);
 
   return (

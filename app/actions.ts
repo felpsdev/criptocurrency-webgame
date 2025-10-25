@@ -145,6 +145,10 @@ export async function computateQuestionResult(
       .where(eq(sessions.id, session.id));
   }
 
+  return score !== 0;
+}
+
+export async function revalidadeQuestions() {
   revalidatePath("/steps/questions");
 }
 
